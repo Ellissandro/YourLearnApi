@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      Your Learn
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-searchbar placeholder="Digite a aula desejada" [shwoCancelButton]="true" #tag (keyup.enter)="buscarVideo(tag.value)"></ion-searchbar>
+  <ion-card>
+    <ion-card-header>
+      Curso Ionic
+    </ion-card-header>
+    <ion-card-content>
+      <img src="https://dc722jrlp2zu8.cloudfront.net/media/cache/04/25/0425398459f9a2acc967ac22698c0a18.jpg" alt="">
+    </ion-card-content>
+    <ion-row>
+      <ion-col >
+        <button class="outl" ion-button icon-left clear small>
+          <div class="setColor"><ion-icon class="icon-s" color="primary" name="albums"></ion-icon>
+          VER PLAYLIST
+        </div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button class="outl" ion-button icon-left clear small>
+          <div class="setColor"><ion-icon class="icon-s" color="primary" name="share"></ion-icon>
+          COMPARTILHAR
+        </div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="showNovoVideo()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

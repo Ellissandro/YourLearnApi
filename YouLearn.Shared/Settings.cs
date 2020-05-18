@@ -6,6 +6,6 @@ namespace YouLearn.Shared
 {
     public static class Settings
     {
-         public static string ConnectionString = "String de conexão do banco de dados";
+         public static string ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=YouLearn;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
     }
 }

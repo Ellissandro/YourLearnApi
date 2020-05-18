@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Novo Usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="form">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Primeiro nome</ion-label>
+        <ion-input type="text" formControlName="primeiroNome"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Ultimo nome</ion-label>
+        <ion-input type="text" formControlName="ultimoNome"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">E-mail</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Senha</ion-label>
+        <ion-input type="password" formControlName="senha"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-button color="primary" fill="outline" expand="block" shape="round" [disabled]="!form.valid"
+    (click)="salvar()">SALVAR</ion-button>
+
+    <ion-button ion-button color="secondary" fill="outline" expand="block" shape="round"
+    (click)="cancelar()">CANCELAR</ion-button>
+  </form>
+</ion-content>
