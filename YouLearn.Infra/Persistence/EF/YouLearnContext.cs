@@ -5,9 +5,10 @@ using YouLearn.Domain.ValueObjects;
 using YouLearn.Infra.Persistence.EF.Map;
 using YouLearn.Shared;
 
+
 namespace YouLearn.Infra.Persistence.EF
 {
-    public class YouLearnContext : DbContext
+    public class YouLearnContext : DbContext 
     {
         public DbSet<Canal> Canais { get; set; }
         public DbSet<PlayList> PlayLists { get; set; }
@@ -15,6 +16,7 @@ namespace YouLearn.Infra.Persistence.EF
         public DbSet<Usuario> Usuarios { get; set; }
         //public DbSet<Favorito> Favoritos { get; set; }
 
+         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(Settings.ConnectionString);

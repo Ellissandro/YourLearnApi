@@ -1,3 +1,4 @@
+import { PlayListService } from './../providers/playlist.service';
 import { CanalService } from './../providers/canal.service';
 import { TestesPage } from './testes/testes.page';
 
@@ -37,7 +38,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     VideoService,
     UsuarioService,
     CanalService,
-    NavParams
+    NavParams,
+    PlayListService
   ],
   bootstrap: [AppComponent]
 })

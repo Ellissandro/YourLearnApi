@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'adicionar-canal',
     loadChildren: () => import('./adicionar-canal/adicionar-canal.module').then( m => m.AdicionarCanalPageModule)
   },
+  {
+    path: 'adicionar-play-list',
+    loadChildren: () => import('./adicionar-play-list/adicionar-play-list.module').then( m => m.AdicionarPlayListPageModule)
+  },
 ];
 
 @NgModule({

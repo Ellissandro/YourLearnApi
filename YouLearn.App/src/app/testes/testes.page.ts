@@ -1,9 +1,10 @@
 import { UsuarioService } from './../../providers/usuario.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController, ModalController } from '@ionic/angular';
 import { ActivatedRoute, Router  } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
+import { UtilService } from 'src/providers/util.service';
+import { CanalService } from 'src/providers/canal.service';
 
 @Component({
   selector: 'app-testes',
@@ -12,42 +13,115 @@ import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular
 })
 export class TestesPage implements OnInit {
 
-  createContactForm: FormGroup;
-  @ViewChild('createForm', { static: false }) createForm: FormGroupDirective;
-
+  canais: any[] = [];
   constructor(
-    private modalController: ModalController,
-    private dataService: UsuarioService
-  ) { }
-
-  dismissModal() {
-    this.modalController.dismiss();
+    private utilService: UtilService,
+    private canalService: CanalService,
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController) {
   }
+  ngOnInit() {
+    this.loadCanal();
+  }
+  async loadCanal() {
 
-  ngOnInit(): void {
-    this.createContactForm = new FormGroup({
-      'firstName': new FormControl('', Validators.required),
-      'lastName': new FormControl('', Validators.required),
-      'email': new FormControl(''),
-      'senha': new FormControl('', Validators.required)
+    //Abre tela de aguarde
+    let loading = await this.utilService.showLoading();
+    loading.present();
+
+    this.canalService.listar().then((response) => {
+      console.log(response);
+      this.canais = response;
+
+      //Fecha a tela de aguarde
+      loading.dismiss();
+
+    }).catch((response) => {
+
+      loading.dismiss();
+
+      this.utilService.showMessageError(response);
+
     });
   }
 
-  submitForm() {
-    this.createForm.onSubmit(undefined);
+  closeModal() {
+    this.modalCtrl.dismiss();
   }
 
-  createContact(values: any) {
-    // copy all the form values into the new contact
-    let newContact: Contact = { ...values };
-    this.dataService.adicionar(newContact);
-    this.dismissModal();
+  async adicionar() {
+    let prompt = await this.alertCtrl.create({
+      header: 'Adicionar canal',
+      message: "Informe os dados do canal",
+      inputs: [
+        {
+          name: 'nome',
+          placeholder: 'Nome do canal',
+          type: 'text'
+        },
+        {
+          name: 'urlLogo',
+          type: 'text',
+          placeholder: 'http://logo.jpg'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+
+          }
+        },
+        {
+          text: 'Salvar',
+          handler: async data => {
+            //Abre tela de aguarde
+            let loading = await this.utilService.showLoading();
+            loading.present();
+              console.log(data);
+            this.canalService.adicionar(data.nome, data.urlLogo).then((response) => {
+              //Fecha a tela de aguarde
+              loading.dismiss();
+
+              this.loadCanal();
+
+            }).catch((response) => {
+
+              loading.dismiss();
+
+              this.utilService.showMessageError(response);
+
+            });
+          }
+        }
+      ]
+    });
+
+    prompt.present();
   }
-}
- class Contact {
-  firstName: string;
-  lastName: string;
-  email: string;
-  senha: string;
+
+  async excluir(canal: any){
+    
+    //Abre tela de aguarde
+    let loading = await this.utilService.showLoading();
+    loading.present();
+
+    this.canalService.excluir(canal.id).then((response) => {
+
+      this.utilService.showAlert(response.json().message);
+
+      this.loadCanal();
+
+      //Fecha a tela de aguarde
+      loading.dismiss();
+
+    }).catch((response) => {
+
+      loading.dismiss();
+
+      this.utilService.showMessageError(response);
+
+    });
+  }
 }
 

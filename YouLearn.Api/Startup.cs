@@ -31,7 +31,8 @@ namespace YouLearn.Api
             services.AddScoped<YouLearnContext, YouLearnContext>();
 
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            //services.AddControllersWithViews();
+            //services.AddHttpContextAccessor();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             //Services
             services.AddTransient<IServiceCanal, ServiceCanal>();
@@ -132,12 +133,20 @@ namespace YouLearn.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            //app.UseHttpsRedirection();
+            //app.UseStaticFiles();
+            
+           // app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseCors(x => {
                 x.AllowAnyHeader();
                 x.AllowAnyMethod();
                 x.AllowAnyOrigin();
             });
-
+        
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c => {

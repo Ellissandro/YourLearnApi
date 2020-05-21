@@ -1,3 +1,5 @@
+import { PlayListService } from './../../providers/playlist.service';
+import { AdicionarPlayListPage } from './../adicionar-play-list/adicionar-play-list.page';
 import { AdicionarCanalPage } from './../adicionar-canal/adicionar-canal.page';
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ModalController } from '@ionic/angular';
@@ -14,7 +16,7 @@ import { CanalService } from 'src/providers/canal.service';
 export class VideoPage implements OnInit {
 
   form: FormGroup;
-  canais: any[] = [];
+  canais : any[] = [];
   playlists: any[] = [];
 
   constructor(public navCtrl: NavController,
@@ -23,9 +25,9 @@ export class VideoPage implements OnInit {
     private utilService: UtilService,
     private modalCtrl: ModalController,
     private canalService: CanalService,
-    private videoService : VideoService,)
+    private videoService : VideoService,
+    private playListService : PlayListService)
  {
-
     this.form = this.fb.group({
       titulo: ['', Validators.compose([
         Validators.minLength(1),
@@ -69,43 +71,38 @@ export class VideoPage implements OnInit {
 
   async loadCanal() {
 
-    //Abre tela de aguarde
     let loading = await this.utilService.showLoading();
     loading.present();
 
     this.canalService.listar().then((response) => {
-      this.canais = response.json();
-
-      //Fecha a tela de aguarde
+      this.canais = response;
       loading.dismiss();
 
     }).catch((response) => {
 
       loading.dismiss();
 
-      //this.utilService.showMessageError(response);
+      this.utilService.showMessageError(response);
 
     });
   }
 
   async loadPlayList() {
-    // //Abre tela de aguarde
-    // let loading = await this.utilService.showLoading();
-    // loading.present();
 
-    // this.playListService.listar().then((response) => {
-    //   this.playlists = response.json();
+    let loading = await this.utilService.showLoading();
+    loading.present();
 
-    //   //Fecha a tela de aguarde
-    //   loading.dismiss();
+    this.playListService.listar().then((response) => {
+    this.playlists = response;
+    loading.dismiss();
 
-    // }).catch((response) => {
+  }).catch((response) => {
 
-    //   loading.dismiss();
+    loading.dismiss();
 
-    //   this.utilService.showMessageError(response);
+    this.utilService.showMessageError(response);
 
-    // });
+  });
   }
   cancelar(){
     this.navCtrl.pop();
@@ -116,5 +113,27 @@ export class VideoPage implements OnInit {
     });
     modal.present();
   }
+  async showAddPlayList(){
+    let modal = await this.modalCtrl.create({
+      component: AdicionarPlayListPage
+    });
+    modal.present();
+  }
+  async salvar(){
+    let loading = await this.utilService.showLoading();
+    loading.present();
+    
+    this.videoService.adicionar(this.form.value).then((response)=>{
+      loading.dismiss();
 
+      this.utilService.showAlert("Operação realizada com sucesso!");
+      this.navCtrl.pop();
+    })
+    .catch((response)=>{
+      loading.dismiss();
+      this.utilService.showMessageError(response);
+
+    });
+
+  }
 }

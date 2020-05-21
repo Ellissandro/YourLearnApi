@@ -4,10 +4,10 @@ import { UtilService } from "./util.service";
 
 
 @Injectable()
-export class CanalService {
+export class PlayListService {
 
   constructor(public http: HttpClient, public utilService: UtilService,) { }
-
+  
   listar(): Promise<any> {
     let host = this.utilService.obterHostDaApi();
 
@@ -15,10 +15,10 @@ export class CanalService {
     .append('Content-Type', 'application/json')
     .append('Authorization', 'Bearer ' + localStorage.getItem('YouLearnToken'));
 
-    return this.http.get(host + 'api/v1/Canal/Listar/', { headers: headers }).toPromise();
+    return this.http.get(host + 'api/v1/PlayList/Listar/', { headers: headers }).toPromise();
   }
 
-  adicionar(nome: string, urlLogo: string): Promise<any> {
+  adicionar(nome: string): Promise<any> {
 
     let host = this.utilService.obterHostDaApi();
 
@@ -26,7 +26,7 @@ export class CanalService {
     .append('Content-Type', 'application/json')
     .append('Authorization', 'Bearer ' + localStorage.getItem('YouLearnToken'));
 
-    return this.http.post(host + 'api/v1/Canal/Adicionar/',  {nome: nome, urlLogo : urlLogo}, { headers: headers }).toPromise();
+    return this.http.post(host + 'api/v1/PlayList/Adicionar/',  {nome: nome}, { headers: headers }).toPromise();
   }
 
   excluir(id : any): Promise<any> {
@@ -37,7 +37,7 @@ export class CanalService {
     .append('Content-Type', 'application/json')
     .append('Authorization', 'Bearer ' + localStorage.getItem('YouLearnToken'));
 
-    return this.http.delete(host + 'api/v1/Canal/Excluir/' + id, { headers: headers }).toPromise();
+    return this.http.delete(host + 'api/v1/PlayList/Excluir/' + id, { headers: headers }).toPromise();
   }
 }
   

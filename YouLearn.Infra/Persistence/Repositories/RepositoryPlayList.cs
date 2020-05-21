@@ -12,6 +12,11 @@ namespace YouLearn.Infra.Persistence.Repositories
     {
         private readonly YouLearnContext _context;
 
+        public RepositoryPlayList(YouLearnContext context)
+        {
+            _context = context;
+        }
+
         public PlayList Adicionar(PlayList playList)
         {
             _context.PlayLists.Add(playList);
@@ -25,7 +30,7 @@ namespace YouLearn.Infra.Persistence.Repositories
 
         public IEnumerable<PlayList> Listar(Guid idUsuario)
         {
-            return _context.PlayLists.Where(x => x.Id == idUsuario).ToList();
+            return _context.PlayLists.Where(x => x.Usuario.Id == idUsuario).ToList();
         }
 
         public PlayList Obter(Guid idPlayList)

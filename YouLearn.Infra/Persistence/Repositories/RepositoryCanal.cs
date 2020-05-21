@@ -30,7 +30,7 @@ namespace YouLearn.Infra.Persistence.Repositories
 
         public IEnumerable<Canal> Listar(Guid idUsuario)
         {
-            return _context.Canais.Where(x => x.Id == idUsuario).ToList();
+            return _context.Canais.Where(x => x.Usuario.Id == idUsuario).ToList();
         }
 
         public Canal Obter(Guid idCanal)

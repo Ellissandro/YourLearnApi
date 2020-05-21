@@ -88,23 +88,24 @@ export class UtilService {
     }
     else {
 
-      // let json: any = response.json();
+      let json: any = response;
 
-      // if (typeof json.error_description != 'undefined') {
-      //     this.showToast(json.error_description);
-      // }
-      // else if (typeof json.errors != 'undefined') {
-      //   for (let erro in json.errors) // for acts as a foreach  
-      //   {
-      //     let message = json.errors[erro].message;
-
-      //     this.showToast(message);
-
-      //   }
-      // }
-      // else {
-        this.showToast("Confira os dados digitados e tente novamente");
+      if (typeof json.error_description != 'undefined') {
+          this.showToast(json.error_description);
       }
+      else if (typeof json.errors != 'undefined') {
+        for (let erro in json.errors) // for acts as a foreach  
+        {
+          let message = json.errors[erro].message;
+
+          this.showToast(message);
+
+        }
+      }
+      else {
+        this.showToast("Operação falhou!");
+      }
+    }
   }
 
   removerAcentos(str) {

@@ -13,6 +13,7 @@ namespace YouLearn.Api
     {
         public static void Main(string[] args)
         {
+            
             CreateHostBuilder(args).Build().Run();
         }
 
