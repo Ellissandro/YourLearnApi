@@ -85,7 +85,7 @@ namespace YouLearn.Domain.Services
         {
             IEnumerable<Video> videoCollection = _repositoryVideo.Listar(idPlayList);
 
-            var response = videoCollection.ToList().Select(entidade => (VideoReponse)entidade);
+            var response = videoCollection.OrderBy(x => x.OrdemNaPlayList).ToList().Select(entidade => (VideoReponse)entidade);
 
             return response;
         }

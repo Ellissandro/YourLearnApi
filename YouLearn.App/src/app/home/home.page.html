@@ -8,23 +8,25 @@
 
 <ion-content fullscreen>
   <ion-searchbar placeholder="Digite a aula desejada" [shwoCancelButton]="true" #tag (keyup.enter)="buscarVideo(tag.value)"></ion-searchbar>
-  <ion-card>
+
+  <ion-card *ngFor="let video of videos">
     <ion-card-header>
-      Curso Ionic
+      <b>{{video.titulo}}</b>
     </ion-card-header>
-    <ion-card-content>
-      <img src="https://dc722jrlp2zu8.cloudfront.net/media/cache/04/25/0425398459f9a2acc967ac22698c0a18.jpg" alt="">
+    <ion-card-content (click)="playVideo(video)"> 
+      <img [src]="video.thumbnail"><br/>
+      {{video.descricao}}
     </ion-card-content>
     <ion-row>
       <ion-col >
-        <button class="outl" ion-button icon-left clear small>
+        <button class="outl" (click)="showPlayList(video)">
           <div class="setColor"><ion-icon class="icon-s" color="primary" name="albums"></ion-icon>
           VER PLAYLIST
         </div>
         </button>
       </ion-col>
       <ion-col>
-        <button class="outl" ion-button icon-left clear small>
+        <button class="outl" (click)="compartilhar(video)">
           <div class="setColor"><ion-icon class="icon-s" color="primary" name="share"></ion-icon>
           COMPARTILHAR
         </div>
@@ -32,6 +34,7 @@
       </ion-col>
     </ion-row>
   </ion-card>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="showNovoVideo()">
       <ion-icon name="add"></ion-icon>

@@ -1,12 +1,14 @@
 import { PlayListService } from './../../providers/playlist.service';
 import { AdicionarPlayListPage } from './../adicionar-play-list/adicionar-play-list.page';
 import { AdicionarCanalPage } from './../adicionar-canal/adicionar-canal.page';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController, NavParams, ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilService } from 'src/providers/util.service';
 import { VideoService } from 'src/providers/video.service';
 import { CanalService } from 'src/providers/canal.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-video',
@@ -18,7 +20,7 @@ export class VideoPage implements OnInit {
   form: FormGroup;
   canais : any[] = [];
   playlists: any[] = [];
-
+  confirm:string;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private fb: FormBuilder,
@@ -26,8 +28,12 @@ export class VideoPage implements OnInit {
     private modalCtrl: ModalController,
     private canalService: CanalService,
     private videoService : VideoService,
+    private router : Router,
+    private route : ActivatedRoute,
     private playListService : PlayListService)
  {
+  this.confirm = this.route.snapshot.paramMap.get("video");
+  console.log(this.confirm);
     this.form = this.fb.group({
       titulo: ['', Validators.compose([
         Validators.minLength(1),
@@ -68,7 +74,7 @@ export class VideoPage implements OnInit {
     this.loadCanal();
     this.loadPlayList();
   }
-
+  
   async loadCanal() {
 
     let loading = await this.utilService.showLoading();
@@ -105,7 +111,7 @@ export class VideoPage implements OnInit {
   });
   }
   cancelar(){
-    this.navCtrl.pop();
+    this.router.navigate([("/")]);
   }
   async showAddCanal(){
     let modal = await this.modalCtrl.create({
@@ -127,13 +133,16 @@ export class VideoPage implements OnInit {
       loading.dismiss();
 
       this.utilService.showAlert("Operação realizada com sucesso!");
-      this.navCtrl.pop();
+      this.router.navigate([("/")]);
     })
     .catch((response)=>{
       loading.dismiss();
       this.utilService.showMessageError(response);
 
     });
-
+  }
+  refresh() {
+    console.log("ativado")
+    this.ngOnInit();
   }
 }

@@ -1,8 +1,9 @@
+import { Router } from '@angular/router';
 import { UsuarioService } from './../../providers/usuario.service';
 import { VideoService } from './../../providers/video.service';
 import { UtilService } from '../../providers/util.service';
 import { Component } from '@angular/core';
-import { LoadingController, NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,8 @@ export class HomePage {
     private videoService : VideoService, 
     private navCtrl : NavController,
     private alertCtrl : AlertController,
-    private usuarioService : UsuarioService
+    private usuarioService : UsuarioService,
+    private router : Router
     ) {
     
   }
@@ -31,7 +33,7 @@ buscarVideo(tag : string){
   loading.present();
 
   this.videoService.listarPorTags(tag).then((response) => {
-     let result = (response as any);
+     this.videos = response;
     loading.dismiss();
   }
   ).catch((response)=>{
@@ -43,7 +45,7 @@ buscarVideo(tag : string){
     let token = localStorage.getItem("YouLearnToken");
 
     if (token != null) {
-      this.navCtrl.navigateForward("video");
+      this.router.navigate(["/video"]);
     } 
     else{
       let prompt = await this.alertCtrl.create({
@@ -66,7 +68,7 @@ buscarVideo(tag : string){
           {
             text: 'Novo usuário',
             handler : ()=>{
-              this.navCtrl.navigateForward("novo-usuario");
+              this.router.navigate(["/novo-usuario"]);
             }
           },
           {
@@ -114,7 +116,7 @@ buscarVideo(tag : string){
           {
             text: 'Sim, quero registrar',
             handler: ()=> {
-              this.navCtrl.navigateForward("video");
+              this.router.navigate(["video"]);
             }
           },
         ]
@@ -125,5 +127,16 @@ buscarVideo(tag : string){
       loading.dismiss(); 
       this.utilService.showMessageError(response);
     }); 
+  }
+  compartilhar(video){
+    window.open('https://www.facebook.com/sharer.php?u=' + video.url);
+  }
+
+  showPlayList(video : any){
+    this.router.navigate(['/play-list', {idPlayList: video.idPlayList, nomePlayList: video.nomePlayList}]);
+  }
+
+  playVideo(video : any){
+    this.router.navigate(['/play-video', {url: video.url}]);
   }
 }

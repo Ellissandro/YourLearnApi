@@ -24,6 +24,29 @@ export class AdicionarPlayListPage implements OnInit {
     this.loadPlayList();
   }
   async excluir(playlist: any) {
+    const alert = await this.alertCtrl.create({
+      header: 'Atenção',
+      message: 'Deseja excluir essa playlist?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            return;
+          }
+        }, {
+          text: 'Confirmar',
+          handler: () => {
+            this.excluirConfirm(playlist);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async excluirConfirm(playlist: any) {
 
     let loading = await this.utilService.showLoading();
     loading.present();
@@ -49,7 +72,7 @@ export class AdicionarPlayListPage implements OnInit {
     let loading = await this.utilService.showLoading();
     loading.present();
 
-    this.playListService.listar().then((response) => {
+      this.playListService.listar().then((response) => {
       this.playLists = response;
 
       loading.dismiss();

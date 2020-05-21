@@ -9,13 +9,13 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let canais of canal"> 
+    <ion-item *ngFor="let canal of canais"> 
       <ion-thumbnail slot="start">
-        <img [src]="canais.urlLogo">
+        <img [src]="canal.urlLogo">
       </ion-thumbnail>
-      <h2>{{canais.nome}}</h2>
+      <h2>{{canal.nome}}</h2>
 
-      <ion-icon name="trash" slot="end" (click)="excluir(canais)"></ion-icon>
+      <ion-icon name="trash" slot="end" (click)="excluir(canal)"></ion-icon>
 
     </ion-item>
   </ion-list>

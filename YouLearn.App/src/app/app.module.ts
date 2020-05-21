@@ -1,6 +1,5 @@
 import { PlayListService } from './../providers/playlist.service';
 import { CanalService } from './../providers/canal.service';
-import { TestesPage } from './testes/testes.page';
 
 import { UsuarioService } from './../providers/usuario.service';
 import { VideoService } from './../providers/video.service';

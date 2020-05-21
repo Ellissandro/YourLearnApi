@@ -20,16 +20,20 @@ const routes: Routes = [
     loadChildren: () => import('./novo-usuario/novo-usuario.module').then( m => m.NovoUsuarioPageModule)
   },
   {
-    path: 'testes',
-    loadChildren: () => import('./testes/testes.module').then( m => m.TestesPageModule)
-  },
-  {
     path: 'adicionar-canal',
     loadChildren: () => import('./adicionar-canal/adicionar-canal.module').then( m => m.AdicionarCanalPageModule)
   },
   {
     path: 'adicionar-play-list',
     loadChildren: () => import('./adicionar-play-list/adicionar-play-list.module').then( m => m.AdicionarPlayListPageModule)
+  },
+  {
+    path: 'play-list',
+    loadChildren: () => import('./play-list/play-list.module').then( m => m.PlayListPageModule)
+  },
+  {
+    path: 'play-video',
+    loadChildren: () => import('./play-video/play-video.module').then( m => m.PlayVideoPageModule)
   },
 ];
 

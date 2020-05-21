@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { IfStmt } from '@angular/compiler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-novo-usuario',
@@ -17,7 +18,8 @@ export class NovoUsuarioPage implements OnInit {
   constructor(private formBuilder : FormBuilder,
     private utilService : UtilService,
     private usuarioService : UsuarioService,
-    private navCtrl : NavController) {
+    private navCtrl : NavController,
+    private router: Router) {
 
       this.form = this.formBuilder.group({
         primeiroNome: ['', Validators.compose([
@@ -60,7 +62,7 @@ export class NovoUsuarioPage implements OnInit {
 
       localStorage.setItem('usuario.email', this.form.value.email);
 
-      this.navCtrl.pop();
+      this.router.navigate[('/')];
     })
     .catch((response)=>{
       loading.dismiss();
@@ -69,6 +71,6 @@ export class NovoUsuarioPage implements OnInit {
   }
 
   cancelar(){
-    this.navCtrl.pop();
+    this.router.navigate[('/')];
   }
 }

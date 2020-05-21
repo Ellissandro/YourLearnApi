@@ -2,6 +2,7 @@ import { CanalService } from './../../providers/canal.service';
 import { UtilService } from './../../providers/util.service';
 import { ModalController, AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adicionar-canal',
@@ -9,16 +10,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./adicionar-canal.page.scss'],
 })
 export class AdicionarCanalPage implements OnInit {
-  canal = [];
+  canais = [];
   constructor(private modalCtrl:ModalController,
     private utilService: UtilService,
     private canalService: CanalService,
-    private alertCtrl: AlertController ) { }
+    private alertCtrl: AlertController,
+    private router: Router ) { }
 
-  ngOnInit() {
-    this.loadCanal();
-  }
-  
   async loadCanal() {
 
     let loading = await this.utilService.showLoading();
@@ -27,7 +25,7 @@ export class AdicionarCanalPage implements OnInit {
 
     this.canalService.listar().then((response) => {
 
-      this.canal = response;
+      this.canais = response;
 
       loading.dismiss();
 
@@ -39,7 +37,10 @@ export class AdicionarCanalPage implements OnInit {
 
     });
   }
-
+  ngOnInit(){
+    this.loadCanal();
+  }
+  
   closeModal(){
     this.modalCtrl.dismiss();
     this.loadCanal();
@@ -94,8 +95,31 @@ export class AdicionarCanalPage implements OnInit {
 
     prompt.present();
   }
-  async excluir(canal: any) {
 
+  async excluir(canal: any) {
+    const alert = await this.alertCtrl.create({
+      header: 'Atenção',
+      message: 'Deseja excluir esse canal?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            return;
+          }
+        }, {
+          text: 'Confirmar',
+          handler: () => {
+            this.excluirConfirm(canal);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async excluirConfirm(canal: any) {
     let loading = await this.utilService.showLoading();
     loading.present();
     this.canalService.excluir(canal.id).then((response) => {
