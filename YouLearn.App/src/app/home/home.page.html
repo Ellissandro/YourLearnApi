@@ -18,7 +18,7 @@
       {{video.descricao}}
     </ion-card-content>
     <ion-row>
-      <ion-col >
+      <ion-col *ngIf="video.idPlayList">
         <button class="outl" (click)="showPlayList(video)">
           <div class="setColor"><ion-icon class="icon-s" color="primary" name="albums"></ion-icon>
           VER PLAYLIST

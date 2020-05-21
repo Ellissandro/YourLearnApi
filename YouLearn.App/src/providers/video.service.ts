@@ -8,7 +8,14 @@ export class VideoService {
 
   constructor(public http: HttpClient, public utilService: UtilService,
   ) { }
-  
+  listar(): Promise<any> {
+    
+    let host = this.utilService.obterHostDaApi();
+
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this.http.get(host + 'api/v1/Video/Listar/', { headers: headers }).toPromise();
+  }
   listarPorTags(tags: string): Promise<any> {
     
     let host = this.utilService.obterHostDaApi();

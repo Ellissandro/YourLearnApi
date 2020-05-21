@@ -71,6 +71,6 @@ export class NovoUsuarioPage implements OnInit {
   }
 
   cancelar(){
-    this.router.navigate[('/')];
+    this.navCtrl.pop();
   }
 }

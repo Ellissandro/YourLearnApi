@@ -22,7 +22,6 @@ namespace YouLearn.Api.Controllers
             _serviceVideo = serviceVideo;
             _httpContextAccessor = httpContextAccessor;
         }
-
         [AllowAnonymous]
         [HttpGet]
         [Route("api/v1/Video/Listar/{tags}")]

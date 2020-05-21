@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-play-video',
@@ -9,12 +10,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class PlayVideoPage implements OnInit {
   urlSecurity : any;
-  constructor(private route: ActivatedRoute,private domSanitizer : DomSanitizer) {
+  constructor(private route: ActivatedRoute,private domSanitizer : DomSanitizer, private navCtrl: NavController) {
      let url = this.route.snapshot.paramMap.get("url");
     this.urlSecurity = this.domSanitizer.bypassSecurityTrustResourceUrl(url);
    }
 
   ngOnInit() {
   }
-
+  voltar(){
+    this.navCtrl.pop();
+  }
 }

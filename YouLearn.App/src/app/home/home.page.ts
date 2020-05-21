@@ -139,4 +139,8 @@ buscarVideo(tag : string){
   playVideo(video : any){
     this.router.navigate(['/play-video', {url: video.url}]);
   }
+
+  showVideosDefault(){
+    this.videoService.listar();
+  }
 }

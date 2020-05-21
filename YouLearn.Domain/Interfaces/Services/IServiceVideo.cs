@@ -12,7 +12,6 @@ namespace YouLearn.Domain.Interfaces.Services
     public interface IServiceVideo : IServiceBase
     {
         AdicionarVideoResponse AdicionarVideo(AdicionarVideoRequest request, Guid idUsuario);
-
         IEnumerable<VideoReponse> Listar(string tags);
         IEnumerable<VideoReponse> Listar(Guid idPlayList);
     }
